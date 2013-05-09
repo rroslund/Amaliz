@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %} Amaliz - Django{% endblock %}
+{% block javascripthead %}
+<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.js"></script>
+<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.categories.js"></script>
+{% endblock %}
+
+{% block javascript %}
+<script type="text/javascript">
+ function makeGraph(){
+$.plot("#graphplaceholder", [ dat ], {
+      grid: {
+      hoverable: true
+      },
+      series: {
+bars: {
+show: true,
+barWidth: 0.6,
+align: "center"
+}
+},
+xaxis: {
+mode: "categories",
+tickLength: 0
+}
+});};
+ var dat = []
+  $.ajax({
+type: "GET", 
+url:"http://census.soe.com/get/ps2-beta/character/?name.first_lower=amaliz&c:show=experience.rank&c:show=name.first",
+dataType:"json",
+success: 
+function(data){
+var chr = data.character_list[0]
+dat.push([ chr.name.first,chr.experience[0].rank])
+  },
+error: function(request, errorText, errorCode){alert(errorText);} });
+  $.ajax({
+type: "GET", 
+url:"http://census.soe.com/get/ps2-beta/character/?name.first_lower=gunmancer&c:show=experience.rank&c:show=name.first",
+dataType:"json",
+success: 
+function(data){
+var chr = data.character_list[0]
+dat.push([ chr.name.first,chr.experience[0].rank]);
+makeGraph();
+  },
+error: function(request, errorText, errorCode){alert(errorText);} });
+</script>
+{% endblock %}
+
+{% block content %}
+<h1>Battle Rank</h1>
+<div class="demo-container">
+	<div id="graphplaceholder" class="demo-placeholder"></div>
+</div>
+{% if not session.logged_in %}
+  <p>You are not logged in.</p>
+{% else %}
+  <p>You are logged in.</p>
+{% endif %}
+{% endblock %}
