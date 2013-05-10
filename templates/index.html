@@ -9,7 +9,8 @@
 {% block javascript %}
 <script type="text/javascript">
   function addToGraph(plot,data){
-    plot.setData(data);
+    plot.setData([data]);
+    plot.setupGrid();
     plot.draw();
   }
  function makeGraph(data){
@@ -30,8 +31,8 @@ tickLength: 0
 }
 });
 }
-var dat = [[]];
-//var plot = makeGraph(dat);
+var dat = [];
+var plot = makeGraph([dat]);
   $.ajax({
 type: "GET", 
 async: true,
@@ -41,7 +42,7 @@ success:
 function(data){
 var chr = data.character_list[0]
 dat.push([ chr.name.first,chr.experience[0].rank])
-//addToGraph(plot,dat);
+addToGraph(plot,dat);
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
   $.ajax({
@@ -53,7 +54,7 @@ success:
 function(data){
 var chr = data.character_list[0]
 dat.push([ chr.name.first,chr.experience[0].rank]);
-//addToGraph(plot,dat);
+addToGraph(plot,dat);
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
 </script>
