@@ -8,6 +8,7 @@
 
 {% block javascript %}
 <script type="text/javascript">
+$(function () {
   function addToGraph(plot,data){
     plot.setData([data]);
     plot.setupGrid();
@@ -57,6 +58,7 @@ dat.push([ chr.name.first,chr.experience[0].rank]);
 addToGraph(plot,dat);
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
+});
 </script>
 {% endblock %}
 
