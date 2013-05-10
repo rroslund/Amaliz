@@ -8,8 +8,8 @@
 
 {% block javascript %}
 <script type="text/javascript">
- function makeGraph(){
-$.plot("#graphplaceholder", [ dat ], {
+ function makeGraph(data){
+$.plot("#graphplaceholder", [ data ], {
       grid: {
       hoverable: true
       },
@@ -28,24 +28,26 @@ tickLength: 0
  var dat = []
   $.ajax({
 type: "GET", 
-async: false,
+async: true,
 url:"/brank/amaliz",
 dataType:"json",
 success: 
 function(data){
 var chr = data.character_list[0]
 dat.push([ chr.name.first,chr.experience[0].rank])
+makeGraph();
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
   $.ajax({
 type: "GET", 
-async: false,
+async: true,
 url:"/brank/gunmancer",
 dataType:"json",
 success: 
 function(data){
 var chr = data.character_list[0]
 dat.push([ chr.name.first,chr.experience[0].rank]);
+makeGraph();
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
 makeGraph();
