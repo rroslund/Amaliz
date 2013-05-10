@@ -8,8 +8,12 @@
 
 {% block javascript %}
 <script type="text/javascript">
+  function addToGraph(plot,data){
+    plot.setData(data);
+    plot.draw();
+  }
  function makeGraph(data){
-$.plot("#graphplaceholder", [ data ], {
+   return $.plot("#graphplaceholder", [ data ], {
       grid: {
       hoverable: true
       },
@@ -24,8 +28,10 @@ xaxis: {
 mode: "categories",
 tickLength: 0
 }
-});};
- var dat = []
+});
+}
+var dat = []
+var plot = makeGraph(dat);
   $.ajax({
 type: "GET", 
 async: true,
@@ -35,7 +41,7 @@ success:
 function(data){
 var chr = data.character_list[0]
 dat.push([ chr.name.first,chr.experience[0].rank])
-makeGraph();
+addToGraph(plot,dat);
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
   $.ajax({
@@ -47,10 +53,9 @@ success:
 function(data){
 var chr = data.character_list[0]
 dat.push([ chr.name.first,chr.experience[0].rank]);
-makeGraph();
+addToGraph(plot,dat);
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
-makeGraph();
 </script>
 {% endblock %}
 
