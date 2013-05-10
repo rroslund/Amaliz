@@ -9,8 +9,7 @@ app.config.update(
 
 
 def getBRank(name):
-    url =
-    'http://census.soe.com/get/ps2-beta/charater/?name.first_lower='+name+'&c:show=experience.rank'
+    url = 'http://census.soe.com/get/ps2-beta/charater/?name.first_lower='+name+'&c:show=experience.rank&c:show=name.first'
     return urllib.urlopen(url).read()
 
 
