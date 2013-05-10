@@ -30,7 +30,7 @@ tickLength: 0
 }
 });
 }
-var dat = []
+var dat = [[]]
 var plot = makeGraph(dat);
   $.ajax({
 type: "GET", 
@@ -63,6 +63,7 @@ error: function(request, errorText, errorCode){alert(errorText);} });
 <h1>Battle Rank</h1>
 <div class="demo-container">
 	<div id="graphplaceholder" class="demo-placeholder"></div>
+	<div id="agraphplaceholder" class="demo-placeholder"></div>
 </div>
 {% if not session.logged_in %}
   <p>You are not logged in.</p>
