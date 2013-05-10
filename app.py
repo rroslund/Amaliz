@@ -1,4 +1,4 @@
-import os
+import os, urllib
 from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
@@ -6,6 +6,15 @@ app = Flask(__name__)
 app.config.update(
         DEBUG = True,
         )
+
+
+def getBRank(name):
+    url =
+    'http://census.soe.com/get/ps2-beta/charater/?name.first_lower='+name+'&c:show=experience.rank'
+    return urllib.urlopen(url).read()
+
+
+
 
 #----
 # controllerz
@@ -21,6 +30,13 @@ def index():
 @app.route("/test")
 def test():
     return "This is a test"
+
+@app.route("/brank/<username>")
+def brank(username):
+    return getBRank(username)
+
+
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT",5000))

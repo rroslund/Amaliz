@@ -29,7 +29,7 @@ tickLength: 0
   $.ajax({
 type: "GET", 
 async: false,
-url:"http://census.soe.com/get/ps2-beta/character/?name.first_lower=amaliz&c:show=experience.rank&c:show=name.first",
+url:"/rank/amaliz",
 dataType:"json",
 success: 
 function(data){
@@ -40,7 +40,7 @@ error: function(request, errorText, errorCode){alert(errorText);} });
   $.ajax({
 type: "GET", 
 async: false,
-url:"http://census.soe.com/get/ps2-beta/character/?name.first_lower=gunmancer&c:show=experience.rank&c:show=name.first",
+url:"/rank/gunmancer",
 dataType:"json",
 success: 
 function(data){
