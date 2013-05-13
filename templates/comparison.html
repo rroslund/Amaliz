@@ -9,16 +9,41 @@
 
 {% block javascript %}
 <script type="text/javascript">
-  $(function(){
-      makeWeaponGraph();
+$(function () {
+ var dat = [];
+var plot = makeGraph([dat],"#graphplaceholder");
+  $.ajax({
+type: "GET", 
+async: true,
+url:"/brank/amaliz",
+dataType:"json",
+success: 
+function(data){
+var chr = data.character_list[0]
+dat.push([ chr.name.first,chr.experience[0].rank])
+addToGraph(plot,dat);
+  },
+error: function(request, errorText, errorCode){alert(errorText);} });
+  $.ajax({
+type: "GET", 
+async: true,
+url:"/brank/gunmancer",
+dataType:"json",
+success: 
+function(data){
+var chr = data.character_list[0]
+dat.push([ chr.name.first,chr.experience[0].rank]);
+addToGraph(plot,dat);
+  },
+error: function(request, errorText, errorCode){alert(errorText);} });
 });
 </script>
 {% endblock %}
 
 {% block content %}
-<h1>Weapon Deaths</h1>
+<h1>Battle Rank</h1>
 <div class="demo-container">
-	<div id="wepgraph" class="demo-placeholder"></div>
+	<div id="graphplaceholder" class="demo-placeholder"></div>
 </div>
 {% if not session.logged_in %}
   <p>You are not logged in.</p>

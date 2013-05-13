@@ -8,15 +8,15 @@ app.config.update(
         )
 
 baseurl = 'http://census.soe.com/get/ps2-beta/'
-def ggetCharId(name):
-    url='htrp://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=name.first'
+def getCharId(name):
+    url='http://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=name.first'
     return int(json.loads(urllib.urlopen(url).read())['character_list'][0]['id'])
 
-def ggetBRank(name):
+def getBRank(name):
     url = 'http://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=experience.rank&c:show=name.first'
     return urllib.urlopen(url).read()
 
-def getCharId(name):
+def ggetCharId(name):
     return 9001
 
 def getItemTESTJson(url):
@@ -24,14 +24,14 @@ def getItemTESTJson(url):
     res =  json.loads(f.read())
     f.close()
     return res
-def getJson(url):
+def ggetJson(url):
     f = file('/Users/rich/Documents/amalizDeaths.json','r')
     res =  json.loads(f.read())
     f.close()
     return res
 
 
-def ggetJson(url):
+def getJson(url):
     return json.loads(urllib.urlopen(url).read())
 
 def getDeathsByWeapon(name,numToCheck):
@@ -48,7 +48,7 @@ def getDeathsByWeapon(name,numToCheck):
 
 def getItemName(itemId):
     url = baseurl+'/item/'+str(itemId)+'?c:show=name'
-    jsonres = getItemTESTJson(url)
+    jsonres = getJson(url)
     res = [x['name']['en'] for x in jsonres['item_list'] if int(x['id'])==int(itemId)]
     if res != None and len(res)>0:
         return res[0]
@@ -67,6 +67,12 @@ def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
     'ico/favicon.ico')
 
+@app.route("/comparison/")
+def comparison():
+    return render_template('comparison.html')
+@app.route("/home/")
+def home():
+    return render_template('index.html')
 @app.route("/")
 def index():
     return render_template('index.html')
