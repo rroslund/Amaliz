@@ -1,39 +1,17 @@
 {% extends "base.html" %}
 {% block title %} Amaliz - Django{% endblock %}
 {% block javascripthead %}
-<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.js"></script>
-<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.js"></script>
-<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.categories.js"></script>
+<script language="javascript" type="text/javascript" src="../static/js/jquery.min.js"></script>
+<script language="javascript" type="text/javascript" src="../static/js/jquery.flot.js"></script>
+<script language="javascript" type="text/javascript" src="../static/js//jquery.flot.categories.min.js"></script>
+<script language="javascript" type="text/javascript" src="../static/js/amaliz.js"></script>
 {% endblock %}
 
 {% block javascript %}
 <script type="text/javascript">
 $(function () {
-  function addToGraph(plot,data){
-    plot.setData([data]);
-    plot.setupGrid();
-    plot.draw();
-  }
- function makeGraph(data){
-   return $.plot("#graphplaceholder", [ data ], {
-      grid: {
-      hoverable: true
-      },
-      series: {
-bars: {
-show: true,
-barWidth: 0.6,
-align: "center"
-}
-},
-xaxis: {
-mode: "categories",
-tickLength: 0
-}
-});
-}
-var dat = [];
-var plot = makeGraph([dat]);
+ var dat = [];
+var plot = makeGraph([dat],"#graphplaceholder");
   $.ajax({
 type: "GET", 
 async: true,
@@ -58,6 +36,7 @@ dat.push([ chr.name.first,chr.experience[0].rank]);
 addToGraph(plot,dat);
   },
 error: function(request, errorText, errorCode){alert(errorText);} });
+makeWeaponGraph();
 });
 </script>
 {% endblock %}
@@ -66,7 +45,7 @@ error: function(request, errorText, errorCode){alert(errorText);} });
 <h1>Battle Rank</h1>
 <div class="demo-container">
 	<div id="graphplaceholder" class="demo-placeholder"></div>
-	<div id="agraphplaceholder" class="demo-placeholder"></div>
+	<div id="wepgraph" class="demo-placeholder"></div>
 </div>
 {% if not session.logged_in %}
   <p>You are not logged in.</p>
