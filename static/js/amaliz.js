@@ -23,12 +23,12 @@ function addToGraph(plot,data){
 }
  
 
-function makeWeaponGraph(){
+function makeWeaponGraph(user){
  var wplot = makeGraph([[]],"#wepgraph");
 $.ajax({
 type: "GET", 
 async: true,
-url:"/weapon_deaths/amaliz&1000",
+url:"/weapon_deaths/"+user+"&1000",
 dataType:"json",
 success: 
 function(data){

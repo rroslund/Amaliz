@@ -10,8 +10,16 @@
 {% block javascript %}
 <script type="text/javascript">
   $(function(){
-      makeWeaponGraph();
-});
+      makeWeaponGraph("amaliz");
+      
+
+      });
+function weaponuserClick(){
+  var user = $("#userName").val();
+  if(user){
+    makeWeaponGraph(user);
+    }
+}
 </script>
 {% endblock %}
 
@@ -19,6 +27,10 @@
 <h1>Weapon Deaths</h1>
 <div class="demo-container">
 	<div id="wepgraph" class="demo-placeholder"></div>
+</div>
+<div class="input-append">
+  <input class="span2" id="userName" type="text" name ="user"/>
+  <button class="btn" type="button" onclick="weaponuserClick()">Get the stuff!</button>
 </div>
 {% if not session.logged_in %}
   <p>You are not logged in.</p>
