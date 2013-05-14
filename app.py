@@ -8,14 +8,11 @@ app.config.update(
         )
 
 baseurl = 'http://census.soe.com/get/ps2-beta/'
-def getCharId(name):
-    url='http://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=name.first'
-    return int(json.loads(urllib.urlopen(url).read())['character_list'][0]['id'])
 
-def getBRank(name):
-    url = 'http://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=experience.rank&c:show=name.first'
-    return urllib.urlopen(url).read()
 
+#-----------------
+#   Test Methods
+#-----------------
 def ggetCharId(name):
     return 9001
 
@@ -31,8 +28,32 @@ def ggetJson(url):
     return res
 
 
+
+def getCharId(name):
+    url='http://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=name.first'
+    return int(json.loads(urllib.urlopen(url).read())['character_list'][0]['id'])
+
+def getBRank(name):
+    url = 'http://census.soe.com/get/ps2-beta/character/?name.first_lower='+name+'&c:show=experience.rank&c:show=name.first'
+    return urllib.urlopen(url).read()
+
+
 def getJson(url):
     return json.loads(urllib.urlopen(url).read())
+
+def getDeathsByCharacter(name,numToCheck):
+    charId = getCharId(name);
+    url = baseurl+'/characters_event/'+str(charId)+'?type=DEATH&c:limit='+str(numToCheck)
+    url = url+'&c:resolve=attacker(name.first,type.faction)'
+    res = getJson(url)
+    charList = [int(x['attacker_character_id']) for x in res['characters_event_list']]
+    charDict= {int(x['attacker_character_id']):x for x in res['characters_event_list']}
+    uniqueAttackers = set(charList)
+    attackerCount = [(charDict[x],charList.count(x)) for x in uniqueAttackers]
+    sortedAttCnt = sorted(attackerCount,key=lambda attack: attack[1],reverse=True)
+    return [(x[0]['attacker']['name'],x[1],x[0]['attacker']['type']['faction']) for x in sortedAttCnt[0:10]]
+
+            
 
 def getDeathsByWeapon(name,numToCheck):
     charId = getCharId(name);
@@ -87,6 +108,9 @@ def brank(username):
 def deathsByWep(userOne,amount):
     return getDeathsByWeapon(userOne,amount)
 
+@app.route("/character_deaths/<userOne>&<amount>")
+def deathsByChar(userOne,amount):
+    return getDeathsByCharacter(userOne,amount)
 
 
 
