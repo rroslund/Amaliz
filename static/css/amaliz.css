@@ -1,0 +1,35 @@
+body{
+  background-color: #611297;
+  background-image: linear-gradient(to bottom, #612597, #180350);
+  color: #101010;
+}
+.page-header{
+  border-bottom: 1px solid #000000;
+}
+
+.nav-list > li > a, .sidebarlink{
+  color:#999999;
+  text-shadow: 0 0px 0 rgba(255,255,255,0.5);
+}
+.icon-chevron-right{
+  float: right;
+}
+.bs-docs-sidenav {
+  width: 220px;
+}
+
+/*Responsive stuff!*/
+@media (max-width: 1200px){
+  .bs-docs-sidenav {
+    width: 166px;
+  }
+}
+@media (max-width: 480px){
+  .bs-docs-sidenav {
+    width: auto;
+    margin-bottom: 20px;
+  }
+  .bs-docs-sidenav.affix {
+    top:0;
+  }
+}

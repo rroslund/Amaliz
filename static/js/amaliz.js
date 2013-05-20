@@ -1,20 +1,22 @@
 function makeGraph(data,divId){
-   return $.plot(divId, [ data ], {
-      grid: {
-      hoverable: true
-      },
-      series: {
-bars: {
-show: true,
-barWidth: 0.6,
-align: "center"
-}
-},
-xaxis: {
-mode: "categories",
-tickLength: 0
-}
-});
+  return $.plot(divId, [ data ], {
+    grid: {
+            hoverable: true
+          },
+         series: {
+                   bars: {
+                           show: true,
+         barWidth: 0.3,
+         align: "center"
+                         }
+                 },
+         height: "80%",
+         xaxis: {
+           mode: "categories",
+           color: "black",
+           tickLength: 0
+                }
+  });
 }
 function addToGraph(plot,data){
   plot.setData([data]);

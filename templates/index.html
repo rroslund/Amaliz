@@ -4,6 +4,7 @@
 <script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.js"></script>
 <script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.js"></script>
 <script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.categories.js"></script>
+<script language="javascript" type="text/javascript" src="https://raw.github.com/flot/flot/master/jquery.flot.resize.js"></script>
 <script language="javascript" type="text/javascript" src="../static/js/amaliz.js"></script>
 {% endblock %}
 
@@ -24,17 +25,34 @@ function weaponuserClick(){
 {% endblock %}
 
 {% block content %}
-<h1>Weapon Deaths</h1>
-<div class="demo-container">
-	<div id="wepgraph" class="demo-placeholder"></div>
+<div class="row">
+  <div class="span3 bs-docs-sidebar">
+    <ul class="nav nav-list bs-docs-sidenav affix">
+      <li>
+      <a href="#weapondeaths" class="sidebarlink">
+        <i class="icon-chevron-right"></i>
+        Weapon Deaths</a>
+      </li>
+      <li>
+      <a href="#someplace" class="sidebarlink">
+        <i class="icon-chevron-right"></i>
+        Someplace</a>
+      </li>
+    </ul>
+  </div>
+  <div class="span9">
+    <section id="weapondeaths">
+      <div class="page-header">
+        <h1>Weapon Deaths</h1>
+      </div>
+      <div class="demo-container">
+        <div id="wepgraph" class="demo-placeholder"></div>
+      </div>
+      <div class="input-append">
+        <input class="span2" id="userName" type="text" name ="user"/>
+        <button class="btn" type="button" onclick="weaponuserClick()">Get the stuff!</button>
+      </div>
+    </section>
+  </div>
 </div>
-<div class="input-append">
-  <input class="span2" id="userName" type="text" name ="user"/>
-  <button class="btn" type="button" onclick="weaponuserClick()">Get the stuff!</button>
-</div>
-{% if not session.logged_in %}
-  <p>You are not logged in.</p>
-{% else %}
-  <p>You are logged in.</p>
-{% endif %}
 {% endblock %}
